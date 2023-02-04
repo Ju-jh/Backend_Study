@@ -1,0 +1,42 @@
+[동기 (Sync)와 비동기(Async)에 대한 개념]
+
+=> 놀이기구랑 비슷하다 --> 탑승과 하차가 동기적으로 관리된다고 볼 수 있다.
+=> 비동기로 실행된다 --> 실행된 순서와 관계없이 결과가 나오는 것.
+    (ex)맛집
+    정원이 최대 30명인 맛집
+    입장 순서는 선착순 퇴장 순서는 다 먹은사람부터...
+    다 먹은 사람이 나오면 나온 사람 수 만큼 입장 할 수 있다.
+
+[Blocking Model & Non-Blocking Model]
+
+=> Blocking Model --> 코드의 실행이 끝나기 전까지 실행 제어권을 다른곳에 넘기지 X --> 다른 작업을 하지 못하고 대기하는 것.
+=> Non-Blocking Model --> 코드의 실행이 끝나지 않아도 실행 제어권을 다른곳에 넘겨 다음코드가 실행될 수 있는 것.
+
+=> 즉, 제어권을 넘기면(Non-Blocking) --> 다른 코드도 실행될 수 있으므로 비동기 처리 가능
+=> 또한,제어권을 넘기지X(Blocking) --> 비동기 처리가 가능한 환경이어도 비동기 처리가 불가능
+
+=> (자바스크립트)는 Async + Non-Blockig Model을 채용 --> 현재 실행중인 코드의 실행이 끝나지 않아도 다음코드를 호출.
+    명령들이 순서대로 실행될 수 있게 구현되어 있지만, Non-Blockig Model에 의해 명령이 아닌 모든 함수는 비동기적으로 실행.
+    (ex)03_promise-test.js 실행해보세요.
+        1.setTimeOut(first, 1000): 1초뒤에 first()함수 --> console.log('First()'); 가 실행되도록 명령.
+        2.console.log('Middle') : 'Middle' 문자열이 출력.
+        3.console.log('Last') : 'Last' 문자열이 출력.
+        4.1초가 지난 뒤 'First' 문자열이 출력.
+
+[프로미스(Promise)]
+
+=> 자바스크립트에서 비동기처리를 --> 동기로 처리할 수 있게 돕는 객체유형. --> 비동기 처리를 아주 손쉽게 할 수 있다.
+=> Promise 생성자 인터페이스
+    executor에는 함수만 올 수 있으며 인자로 resolve, reject가 주입.
+    executor는 Promise의 실행 함수라고 불리고, Promise가 만들어질 때 자동으로 실행.
+    Promise가 연산을 언제 종료하는지 상관하지 않고, resolce, reject중 하나를 무조건 호출해야 함.
+
+    (ex)
+        new Promise(executor);
+
+        // 예제
+        new Promise((resolve, reject) => {
+            // 명령문
+        }) ;
+
+(생성자(Constructor)란 무엇인가?)
