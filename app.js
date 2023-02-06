@@ -4,6 +4,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+
+const connect = require("./schemas");
+connect();
+
 app.get('/', (req,res)=>{
     res.send('GET')
 });
@@ -21,5 +25,5 @@ app.delete('/', (req,res)=>{
 })
 
 app.listen(port, ()=>{
-    console.log('Example app listening on port ${port}')
+    console.log('Example app listening on port', port)
 });
