@@ -26,6 +26,9 @@ const postSchema = new mongoose.Schema({
   },
   content: {
     type: String,
+  },
+  comment: {
+    type: String
   }
 
 });

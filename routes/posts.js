@@ -15,7 +15,10 @@ router.get("/posts", async (req, res) => {
             content : post.content
         }
     });
-    res.status(200).json({"data":result});
+
+    let rows = result.sort().reverse()
+
+    res.status(200).json({"data":rows});
 });
 
 // (postId)특정 게시글 조회 API
@@ -81,6 +84,8 @@ router.put("/posts/:postId", async (req,res)=>{
 // 게시글 삭제 API
 router.delete("/posts/:postId", async (req, res, next) => {
     const { postId } = req.params;
+    const {password} = req.body;
+
     
     try {
       const existPost = await Posts.findOne({ postId });
@@ -88,9 +93,13 @@ router.delete("/posts/:postId", async (req, res, next) => {
       if (!existPost) {
         throw new Error("유효하지 않은 post Id 입니다.")
       };
+
+      if (password !== existPost.password){
+        throw new Error("비밀번호가 틀립니다.")
+      };
   
       await Posts.deleteOne({ postId });
-      res.json({ message: "게시글을 삭제하였습니다."});
+      res.status(200).json({ message: "게시글을 삭제하였습니다."});
     
     } catch(error) {
       next(error);

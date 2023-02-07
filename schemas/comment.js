@@ -1,7 +1,16 @@
-// npm i mongoose
 const mongoose = require("mongoose");
 
-const commentSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
+  postId: {
+    type: Number,
+    required: true,
+    unique: true
+  },
+  syncTime: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -11,18 +20,18 @@ const commentSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  postdate: {
-    type: Date,
-    required: true
-  },
   password: {
     type: Number,
     required: true
   },
-  comments: {
+  content: {
+    type: String,
+  },
+  comment: {
     type: String,
     required: true
   }
+
 });
 
-module.exports = mongoose.model("Comments", commentSchema);
+module.exports = mongoose.model("Posts", postSchema);
