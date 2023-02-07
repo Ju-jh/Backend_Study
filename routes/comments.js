@@ -52,9 +52,9 @@ router.post("/comments/:postId", async (req, res, next) => {
 
 
 // 댓글 수정 API
-router.put("/comments/:postId", async (req ,res ,next)=>{
+router.put("/comments/:postId", async (req ,res)=>{
   const { postId } = req.params;
-  const { password, title, content } = req.body;
+  const { commentId, name, password, comment } = req.body;
 
   try {
       const existPost = await Posts.findOne({postId});
@@ -69,7 +69,7 @@ router.put("/comments/:postId", async (req ,res ,next)=>{
       
       await Posts.updateOne(
           {postId},
-          {$set : {title, content}}
+          {$set : {commentId ,name ,password ,comment}}
       );
       res.status(200).json({message: "댓글을 수정하였습니다."});
 
@@ -82,7 +82,7 @@ router.put("/comments/:postId", async (req ,res ,next)=>{
 
 
 // 댓글 삭제 API
-router.delete("/comments/:postId", async (req, res, next) => {
+router.delete("/comments/:postId", async (req, res) => {
   const { postId } = req.params;
   const { password } = req.body;
 
@@ -105,7 +105,6 @@ router.delete("/comments/:postId", async (req, res, next) => {
     next(error);
   }
 });
-
 
 
 
