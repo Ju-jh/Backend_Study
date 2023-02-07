@@ -6,7 +6,7 @@ const Posts = require("../schemas/post.js");
 
 
 // 댓글 조회 API
-router.get("/comment/:postId", async (req, res) => {
+router.get("/comments/:postId", async (req, res) => {
   const { postId } = req.params;
   const comment = await Comments.find({postId});
   const result = comment.map(comment => {
