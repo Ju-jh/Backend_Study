@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   postId: {
-    type: Number,
+    type: String,
     required: true,
     unique: true
   },
@@ -18,7 +18,7 @@ const postSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: false
   },
   password: {
     type: Number,
@@ -27,10 +27,6 @@ const postSchema = new mongoose.Schema({
   content: {
     type: String,
   },
-  comment: {
-    type: String
-  }
-
 });
 
 module.exports = mongoose.model("Posts", postSchema);

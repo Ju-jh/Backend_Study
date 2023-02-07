@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const Posts = require("../schemas/post.js");
 
 
@@ -9,6 +10,7 @@ router.get("/posts", async (req, res) => {
 
     const result = posts.map(post => {
         return {
+            postId : post.postId,
             syncTime : post.syncTime,
             name : post.name,
             title : post.title,
@@ -32,14 +34,14 @@ router.get("/posts/:postId", async (req, res) => {
         name: post.name,
         title: post.title,
         content: post.content
-    };
-  });
+      };
+    });
     res.status(200).json({ "data": result });
 });
 
 // 게시글 작성 API
 router.post("/posts", async (req, res) => {
-    const { postId, syncTime, name, password, title, content } = req.body;
+    const { postId, syncTime, name, password, title, content} = req.body;
   
     const newPost = {
       postId,
@@ -57,7 +59,7 @@ router.post("/posts", async (req, res) => {
 // 게시글 수정 API
 router.put("/posts/:postId", async (req,res)=>{
     const {postId} = req.params;
-    const {password, title, content} = req.body;
+    const {password, title, name, content} = req.body;
 
     try {
         const existPost = await Posts.findOne({postId});
@@ -72,7 +74,7 @@ router.put("/posts/:postId", async (req,res)=>{
         
         await Posts.updateOne(
             {postId},
-            {$set : {title, content}}
+            {$set : {title, name, content}}
         );
         res.status(200).json({message: "게시글을 수정하였습니다."});
 
@@ -82,7 +84,7 @@ router.put("/posts/:postId", async (req,res)=>{
 });
 
 // 게시글 삭제 API
-router.delete("/posts/:postId", async (req, res, next) => {
+router.delete("/posts/:postId", async (req, res) => {
     const { postId } = req.params;
     const {password} = req.body;
 

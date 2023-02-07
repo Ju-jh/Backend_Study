@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const postSchema = new mongoose.Schema({
-  postId: {
-    type: Number,
+const commentSchema = new mongoose.Schema({
+  commentId: {
+    type: String,
     required: true,
     unique: true
   },
@@ -11,27 +11,20 @@ const postSchema = new mongoose.Schema({
     default: Date.now,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: false
   },
   password: {
     type: Number,
     required: true
   },
-  content: {
-    type: String,
-  },
   comment: {
     type: String,
-    required: true
+    required: false
   }
 
 });
 
-module.exports = mongoose.model("Posts", postSchema);
+module.exports = mongoose.model("comments", commentSchema);
