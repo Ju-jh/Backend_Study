@@ -24,20 +24,27 @@ router.get("/comments/:upperPost", async(req,res)=> {
 });
 
 // 댓글 작성 API (동작)
-router.post("/comments/:_id", async(req,res)=> {
+router.post("/comments/:_id", async(req,res,next)=> {
 
     const { _id } = req.params;
     // const _id = req.params._id 와 같다.
     const { syncTime, author, password, comment } = req.body;
     
-    Comments.create({
-        author : author,
-        password : password,
-        syncTime : syncTime,
-        comment : comment,
-        upperPost : _id
-    })
-
+    try {
+        if (comment.length == 0) {
+            throw new Error("댓글을 입력해주세요.")
+        }
+        Comments.create({
+            author : author,
+            password : password,
+            syncTime : syncTime,
+            comment : comment,
+            upperPost : _id
+        })
+        res.send({ message : "댓글을 생성하였습니다." });
+    } catch (error) {
+        next (error);
+    }
     // //원래 사용하던 방식
     // const newPost = {
     //     _id,
@@ -48,8 +55,6 @@ router.post("/comments/:_id", async(req,res)=> {
     // };
     
     // await Comments.create(newPost);
-
-    res.send({ message : "댓글을 생성하였습니다." });
 });
 
 // 특정 게시글에 있는 특정 댓글 수정 API (동작)
@@ -59,6 +64,9 @@ router.put("/comments/:upperPost/:_id", async (req,res,next)=> {
 
     try {
         const existComment = await Comments.findOne({ _id });
+        if (comment.length == 0) {
+            throw new Error("댓글 내용을 입력해주세요.")
+        }
 
         if (!existComment) {
             throw new Error("유효하지 않은 _id 입니다.")
