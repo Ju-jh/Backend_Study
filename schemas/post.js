@@ -26,4 +26,5 @@ const postSchema = new mongoose.Schema({
 
 });
 
+//posts 라는 컬렉션으로 mongoose 활용하여 저장.
 module.exports = mongoose.model("posts",postSchema);

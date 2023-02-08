@@ -6,12 +6,15 @@ mongoose.set('strictQuery',true)
 
 const connect = () => {
   mongoose
+    //postDB라는 DB에 저장
     .connect("mongodb://127.0.0.1:27017/postDB")
     .catch(err => console.log(err));
 };
 
+//DB연결 error 일때 몽고디비 연결 에러라는 문자 console.log에 찍힘
 mongoose.connection.on("error", err => {
   console.error("몽고디비 연결 에러", err);
 });
 
+// connect 를 모듈로 추출
 module.exports = connect;

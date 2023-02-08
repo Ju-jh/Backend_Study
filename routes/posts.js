@@ -55,7 +55,7 @@ router.post("/posts", async(req,res)=> {
     res.json({ message : "게시글을 생성하였습니다." });
 });
 
-// 게시글 수정 API 
+// 게시글 수정 API (동작)
 router.put("/posts/:_id", async (req,res,next)=> {
     const { _id } = req.params;
     const {name ,password ,title ,content} = req.body;
@@ -81,7 +81,7 @@ router.put("/posts/:_id", async (req,res,next)=> {
     }
 });
 
-// 게시글 삭제 API
+// 게시글 삭제 API (동작)
 router.delete("/posts/:_id", async (req,res,next)=> {
     const { _id } = req.params;
     const { password } = req.body;
