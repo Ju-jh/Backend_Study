@@ -52,7 +52,7 @@ router.post("/comments/:_id", async(req,res)=> {
     res.send({ message : "댓글을 생성하였습니다." });
 });
 
-// 특정 게시글에 있는 특정 댓글 수정 API ()
+// 특정 게시글에 있는 특정 댓글 수정 API (동작)
 router.put("/comments/:upperPost/:_id", async (req,res,next)=> {
     const { _id } = req.params;
     const { author, password, comment } = req.body;
@@ -78,8 +78,8 @@ router.put("/comments/:upperPost/:_id", async (req,res,next)=> {
     }
 });
 
-// 특정 게시글의 특정 댓글 삭제 API ()
-router.delete("/comments/:upperPost/:id", async (req,res,next)=> {
+// 특정 게시글의 특정 댓글 삭제 API (동작)
+router.delete("/comments/:upperPost/:_id", async (req,res,next)=> {
     const { _id } = req.params;
     const { password } = req.body;
 
