@@ -20,7 +20,7 @@ router.get("/comments/:upperPost", async(req,res)=> {
         }
     });
     
-    res.status(200).json({"data":result});
+    res.status(201).json({"data":result});
 });
 
 // 댓글 작성 API (동작)
@@ -41,7 +41,7 @@ router.post("/comments/:_id", async(req,res,next)=> {
             comment : comment,
             upperPost : _id
         })
-        res.send({ message : "댓글을 생성하였습니다." });
+        res.status(201).json({ message : "댓글을 생성하였습니다." });
     } catch (error) {
         next (error);
     }
@@ -80,7 +80,7 @@ router.put("/comments/:upperPost/:_id", async (req,res,next)=> {
             { _id },
             {$set : { author, password ,comment }}
         );
-        res.status(200).json({message: "댓글을 수정 하였습니다."});
+        res.status(201).json({message: "댓글을 수정 하였습니다."});
     } catch (error) {
         next (error);
     }
@@ -103,7 +103,7 @@ router.delete("/comments/:upperPost/:_id", async (req,res,next)=> {
         };
 
         await Comments.deleteOne({ _id });
-        res.status(200).json({ message : "댓글을 삭제 하였습니다." })
+        res.status(201).json({ message : "댓글을 삭제 하였습니다." })
 
     } catch (error) {
         next (error);

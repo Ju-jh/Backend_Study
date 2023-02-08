@@ -22,6 +22,7 @@ const postSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
+        // required: false 처리 해야할 것 같다.
     }
 
 });
