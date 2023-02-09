@@ -18,3 +18,4 @@ mongoose.connection.on("error", err => {
 
 // connect 를 모듈로 추출
 module.exports = connect;
+
