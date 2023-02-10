@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Posts = require("../schemas/post.js");
 
-//전체 게시글 조회 API (동작)
+/* 전체 게시글 조회 API (동작) */
 router.get("/posts", async(req,res)=> {
     const posts = await Posts.find({})
 
@@ -21,7 +21,7 @@ router.get("/posts", async(req,res)=> {
     res.status(200).json({"data":rows});
 });
 
-// 특정 게시글 조회 API (동작)
+/* 특정 게시글 조회 API (동작) */ 
 router.get("/posts/:_id", async(req,res)=> {
     const { _id } = req.params;
     const post = await Posts.find({ _id });
@@ -38,7 +38,7 @@ router.get("/posts/:_id", async(req,res)=> {
     res.status(200).json({"data":result});
 });
 
-// 게시글 작성 API (동작)
+/* 게시글 작성 API (동작) */ 
 router.post("/posts", async(req,res)=> {
     const {syncTime, name, password, title, content} = req.body;
 
@@ -55,7 +55,7 @@ router.post("/posts", async(req,res)=> {
     res.json({ message : "게시글을 생성하였습니다." });
 });
 
-// 게시글 수정 API (동작)
+/* 게시글 수정 API (동작) */
 router.put("/posts/:_id", async (req,res,next)=> {
     const { _id } = req.params;
     const {name ,password ,title ,content} = req.body;

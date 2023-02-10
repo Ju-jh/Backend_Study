@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); // [mongoose] = npm mongoose를 요청 --> [mongoose] 는 mongoose module
 
-const postSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({ // [mongoose]module의 Schema(설정값)인 ({...schema})를 postSchema로 생성자함수로 생성 
 
     syncTime: {
         type: Date,
@@ -22,10 +22,8 @@ const postSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true
-        // required: false 처리 해야할 것 같다.
     }
 
 });
 
-//posts 라는 컬렉션으로 mongoose 활용하여 저장.
-module.exports = mongoose.model("posts",postSchema);
+module.exports = mongoose.model("posts",postSchema); // module.exports = Posts 라는 컬렉션에 생성자함수로 생성된 postSchema 를 넣는다..? ?????????

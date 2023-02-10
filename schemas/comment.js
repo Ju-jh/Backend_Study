@@ -1,7 +1,7 @@
-const { ObjectID } = require("bson");
-const mongoose = require("mongoose");
+const { ObjectID } = require("json"); // [{objectID}] = json module을 요청 --> json module
+const mongoose = require("mongoose"); // [mongoose] = npm mongoose 를 요청 --> mongoose module
 
-const commentSchema = new mongoose.Schema({
+const commentSchema = new mongoose.Schema({ // [mongoose]module의 Schema(설정값)인 ({...schema})를 commentSchema로 생성자함수로 생성 
 
     syncTime: {
         type: Date,
@@ -27,5 +27,4 @@ const commentSchema = new mongoose.Schema({
 
 });
 
-//commets 라는 컬렉션으로 mongoose 활용하여 저장.
-module.exports = mongoose.model("comments",commentSchema);
+module.exports = mongoose.model("comments",commentSchema); // module.exports = comments 라는 컬렉션에 생성자함수로 생성된 commentSchema 를 넣는다..? ?????????
