@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router(); // 익스프레스 라우터를 router로 쓰겠다.
+const express = require("express"); // [express]상수 = npm express 요청 --> express module
+const router = express.Router(); // [router]상수 =  [express]를 Router로 쓰겠다.
 const Comments = require("../schemas/comment.js"); // [Comments]schema = 최상위 폴더로 나가서 schemas 폴더로 들어가서 comments.js 파일을 요청 
 
 // 특정 게시글 댓글 조회 API (동작)=====================================================>
