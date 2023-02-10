@@ -55,5 +55,15 @@ router.patch("/todos/:todoId", async (req,res)=> {
     res.send();
 })
 
+// 할 일 삭제 API
+router.delete("/todos/:todoId", async (req, res) => {
+    const { todoId } = req.params;
+  
+    const todo = await Todo.findById(todoId).exec();
+    await todo.delete();
+  
+    res.send({});
+  });
+
 
 module.exports = router;
