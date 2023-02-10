@@ -1,10 +1,14 @@
-const express = require("express")
-const router = express.Router();
 
-const Posts = require("../schemas/post.js");
+
+const express = require("express") // [express] = express module을 요청 --> [express] = express module
+const router = express.Router(); // [router] = express module의 Router()
+const Posts = require("../schemas/post.js"); //
+
+
+// =====================================================>
 
 /* 전체 게시글 조회 API (동작) */
-router.get("/posts", async(req,res)=> {
+router.get("/posts", async(req,res)=> { // []
     const posts = await Posts.find({})
 
     const result = posts.map(post => {
@@ -20,6 +24,8 @@ router.get("/posts", async(req,res)=> {
 
     res.status(200).json({"data":rows});
 });
+
+// =====================================================>
 
 /* 특정 게시글 조회 API (동작) */ 
 router.get("/posts/:_id", async(req,res)=> {
@@ -38,6 +44,8 @@ router.get("/posts/:_id", async(req,res)=> {
     res.status(200).json({"data":result});
 });
 
+// =====================================================>
+
 /* 게시글 작성 API (동작) */ 
 router.post("/posts", async(req,res)=> {
     const {syncTime, name, password, title, content} = req.body;
@@ -54,6 +62,8 @@ router.post("/posts", async(req,res)=> {
 
     res.json({ message : "게시글을 생성하였습니다." });
 });
+
+// =====================================================>
 
 /* 게시글 수정 API (동작) */
 router.put("/posts/:_id", async (req,res,next)=> {
@@ -81,6 +91,8 @@ router.put("/posts/:_id", async (req,res,next)=> {
     }
 });
 
+// =====================================================>
+
 // 게시글 삭제 API (동작)
 router.delete("/posts/:_id", async (req,res,next)=> {
     const { _id } = req.params;
@@ -105,6 +117,7 @@ router.delete("/posts/:_id", async (req,res,next)=> {
     };
 });
 
+// =====================================================>
 
 // 라우터를 밖으로 추출
 module.exports = router;
