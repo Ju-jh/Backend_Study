@@ -1,4 +1,3 @@
-const { ObjectID } = require("json"); // [{objectID}] = json module을 요청 --> json module
 const mongoose = require("mongoose"); // [mongoose] = npm mongoose 를 요청 --> mongoose module
 
 const commentSchema = new mongoose.Schema({ // [mongoose]module의 Schema(설정값)인 ({...schema})를 commentSchema로 생성자함수로 생성 
