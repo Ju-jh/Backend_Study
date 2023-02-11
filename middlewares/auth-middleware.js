@@ -2,15 +2,14 @@ const jwt = require('jsonwebtoken');
 const User = require('../schemas/user');
 
 module.exports = async (req, res, next) => {
-    const { authrization } = req.cookies;
+    const { Authorization } = req.cookies;
     // Bearer ewerwe.sdfwewfw.qewrqwerq
     // undefined 를 split 하면 error 날수도 있으니
     // authorization 쿠키가 존재하지 않았을때를 대비해야
-    const [authType, authToken] = (authrization ?? '').split(' ');
+    const [authType, authToken] = (Authorization ?? '').split(' ');
 
     // authType === Bearer 값인지 확인
     // authToken 검증
-
     if (authType !== 'Bearer' || !authToken) {
         res.status(400).json({
             errorMessage: '로그인 후에 이용할 수 있는 기능입니다.',
@@ -34,5 +33,6 @@ module.exports = async (req, res, next) => {
         res.status(400).json({
             errorMessage: '로그인 후에 사용할 수 있는 기능입니다.',
         });
+        return;
     }
 };
