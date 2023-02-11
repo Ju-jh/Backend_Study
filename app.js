@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken")
-
 const payloadData = {
     myPayloadData : 1234
 }
