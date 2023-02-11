@@ -1,4 +1,3 @@
-// npm i mongoose
 const mongoose = require("mongoose");
 
 const goodsSchema = new mongoose.Schema({
@@ -10,18 +9,17 @@ const goodsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   thumbnailUrl: {
-    type: String
+    type: String,
   },
   category: {
-    type: String
+    type: String,
   },
   price: {
-    type: Number
+    type: Number,
   }
 });
 
 module.exports = mongoose.model("Goods", goodsSchema);
-

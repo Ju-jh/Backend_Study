@@ -1,12 +1,10 @@
-// npm i mongoose
 const mongoose = require("mongoose");
-
-mongoose.set('strictQuery',true)
 
 const connect = () => {
   mongoose
+    .set("strictQuery", true)
     .connect("mongodb://127.0.0.1:27017/spa_mall")
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 mongoose.connection.on("error", err => {
