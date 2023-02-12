@@ -1,5 +1,5 @@
 'use strict';
-const { Model } = require('sequelize');
+const { Model, Sequelize } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Posts extends Model {
         /**
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     Posts.init(
         {
-            id: {
+            postId: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
@@ -21,20 +21,25 @@ module.exports = (sequelize, DataTypes) => {
             },
             title: {
                 type: DataTypes.STRING,
+                allowNull: false,
             },
             content: {
                 type: DataTypes.STRING,
+                allowNull: false,
             },
             password: {
                 type: DataTypes.STRING,
+                allowNull: false,
             },
             createdAt: {
                 allowNull: false,
                 type: DataTypes.DATE,
+                defaultValue: Sequelize.fn('now'),
             },
             updatedAt: {
                 allowNull: false,
                 type: DataTypes.DATE,
+                defaultValue: Sequelize.fn('now'),
             },
         },
         {
