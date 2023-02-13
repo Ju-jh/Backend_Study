@@ -5,9 +5,10 @@ import * as userRepository from '../data/auth.js';
 
 //회원가입 signup
 export async function signup(req, res) {
+    // (1) reqest에서 전달받기
     const { nickname, password, confirm } = req.body;
 
-    // 조건식
+    // (3) 조건식
     const rex = /[a-z][A-Z][0-9]/gi;
     const nicknameCheck = rex.test(nickname);
     if (!nicknameCheck) {
@@ -16,33 +17,33 @@ export async function signup(req, res) {
             .json({ errorMessage: '닉네임의 형식이 일치하지 않습니다.' });
     }
 
-    // 닉네임 중복 확인 --> 닉네임 DB에서 가져와야지
+    // (7) 닉네임 중복 확인 --> 닉네임 DB에서 가져와야지
     const found = await userRepository.findByUsername(nickname);
     if (found != null) {
         return res.status(412).json({ errorMessage: '중복된 닉네임입니다.' });
     }
 
-    // 패스워드 2중 확인 검증
-    if (password !== confirm) {
-        return res
-            .status(412)
-            .json({ errorMessage: '패스워드가 일치하지 않습니다.' });
-    }
-
-    // 패스워드에 닉네임과 같은값 포함하는지 확인 검증
+    // (5) 패스워드에 닉네임과 같은값 포함하는지 확인 검증
     if (password.search(nickname) > -1) {
         return res
             .status(412)
             .json({ errorMessage: '패스워드에 닉네임이 포함되어 있습니다.' });
     }
 
-    // 생성
+    // (6) 패스워드 2중 확인 검증
+    if (password !== confirm) {
+        return res
+            .status(412)
+            .json({ errorMessage: '패스워드가 일치하지 않습니다.' });
+    }
+
+    // (8-1) 생성
     await userRepository.createUser({
         nickname,
         password,
     });
 
-    // 성공 메세지 res
+    // (9) 성공 메세지 res
     res.json({ message: '회원가입에 성공하셨습니다.' });
 }
 

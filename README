@@ -1,7 +1,5 @@
-<aside>
-1️⃣ 과제 요구 사항: 내 프로젝트의 ERD 작성하기
+#1️⃣ 과제 요구 사항: 내 프로젝트의 ERD 작성하기
 
-</aside>
 
 1. 내 프로젝트의 ERD 작성하기
     - ERD란? Entity Relationship Diagram으로 데이터베이스에서 각 데이터들의 관계를 그림으로 표현한 것입니다.
@@ -11,12 +9,15 @@
     [[DB] 📚 데이터 모델링 개념 및 📈 ERD 다이어그램 그리는법 (1:N 관계)](https://inpa.tistory.com/entry/DB-%F0%9F%93%9A-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%AA%A8%EB%8D%B8%EB%A7%81-1N-%EA%B4%80%EA%B3%84-%F0%9F%93%88-ERD-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8)
     
 
-<aside>
+
 2️⃣ 과제 요구 사항: `**mongoose**`를 `**sequelize**`로 변경하기!
 
 **MongoDB**로 연결되어있던 프로젝트를 **MySQL**로 변경합니다!
+
+
+
+#===<< 로직 정리 >>===
 =====================================================================================
-===<< 로직 정리 >>===
 
 --------------- 기본 폴더 윈도우에 생성 후 VScode 연결
 작업폴더 만들기
@@ -41,11 +42,11 @@ npm i
 npm i express 익스프레스 npm 인스톨
 npm i dotenv -- env 실행기
 npm i nodemon -- 자동실행기?
-npm i cookie-parser -- 쿠키 생성기?
+npm i cookie-parser -- 쿠키 생성기
 npm i jsonwebtoken -- jwt 토큰 생성기
 npm i sequelize -- 시퀄라이즈 
 npm i bcrypt -- 암호화
-npm i express-async-errors -- 비동기 에러 검사? 쓸일 없는데 쓰라함(앨리?)
+npm i express-async-errors -- 비동기 에러 검사
 npm i express-validator -- 유효성검사
 npm i morgan -- ??
 npm i mysql2 -- mysql2(신식) !== mysql  
@@ -53,17 +54,19 @@ npm i mysql2 -- mysql2(신식) !== mysql
 ============================================================================================
 
 1. 회원 가입 API
+
     - 닉네임, 비밀번호, 비밀번호 확인을 **request**에서 전달받기 
-    (1) => "./data/auth.js"
+    (1) => "./controller/auth.js(회원가입 signup)"
+            const { nickname, password, confirm } = req.body로 가져오기
     
     - 닉네임은 `최소 3자 이상, 
-    (2) => "./routes/auth.js(validateCredential(nickname))"
+    (2) => "./routes/auth.js(validateCredential(nickname))"(1) --> "../middleware/varidator.js"(2)
     
     알파벳 대소문자(a~z, A~Z), 숫자(0~9)`로 구성하기 
     (3) => "./controller/auth.js(조건식)"
 
     - 비밀번호는 `최소 4자 이상이며, 
-    (4) => "./routes/auth.js(validateCredential(password))"
+    (4) => "./routes/auth.js(validateCredential(password))"(1) --> "../middleware/varidator.js"(2)
 
     닉네임과 같은 값이 포함된 경우 회원가입에 실패`로 만들기 
     (5) => "./controller/auth.js(패스워드에 닉네임과 같은값 포함하는지 확인 검증)"
@@ -71,24 +74,32 @@ npm i mysql2 -- mysql2(신식) !== mysql
     - 비밀번호 확인은 비밀번호와 정확하게 일치하기
     (6) => "./controller/auth.js(패스워드 2중 확인 검증)"
 
-    - 데이터베이스에 존재하는 닉네임을 입력한 채 회원가입 버튼을 누른 경우 
-    "중복된 닉네임입니다." 라는 에러메세지를 **response**에 포함하기
+    - 데이터베이스에 존재하는 닉네임을 입력한 채 회원가입 버튼을 누른 경우 "중복된 닉네임입니다." 라는 에러메세지를 **response**에 포함하기
     (7) => "./controller/auth.js(닉네임 중복 확인)"
+
+    - 위의 조건들에 부합한다면 DB에 userId ,nickname ,password 생성하기
+    (8) => "./controller/auth.js(생성)"(1) --> "../data/auth.js"(2) (function createUser(users) 실행)
+                return User.create(users).then((data) => data.dataValues.userId) 로 저장
     
+    - 성공 메세지 response
+    (9) => "./controller/auth.js(성공 메세지 res)"
+
 ============================================================================================
 
 2. 로그인 API
-    - 닉네임, 비밀번호를 **request**에서 전달받기
-    (8) => 
 
-    - 로그인 버튼을 누른 경우 닉네임과 비밀번호가 데이터베이스에 등록됐는지 확인한 뒤, 하나라도 맞지 않는 정보가 있다면 "닉네임 또는 패스워드를 확인해주세요."라는 에러 메세지를 **response**에 포함하기
-    (9) => 
+    - 닉네임, 비밀번호를 **request**에서 전달받기
+    (10) => "./controller/auth.js(로그인 API)" 
+            const { nickname, password } = req.body로 가져오기
+
+    - 로그인 버튼을 누른 경우 닉네임과 비밀번호가 데이터베이스에 등록됐는지 찾은 뒤, 
+    (11) => "./controller/auth.js(로그인 API)"
+    
+    하나라도 맞지 않는 정보가 있다면 "닉네임 또는 패스워드를 확인해주세요."라는 에러 메세지를 **response**에 포함하기
+    (12) => "./controller/auth.js(로그인 API)"
     
     - 로그인 성공 시, 로그인에 성공한 유저의 정보를 JWT를 활용하여 클라이언트에게 Cookie로 전달하기
-    (10) => 
-
-
-
+    (13) => "./controller/auth.js(토큰생성기)" --> "./controller/auth.js(토큰처리)"
 
 ============================================================================================
 

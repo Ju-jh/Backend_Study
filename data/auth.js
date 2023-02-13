@@ -29,6 +29,7 @@ export const User = sequelize.define(
     }
 );
 
+// (8-2) signup 생성하기
 export async function createUser(users) {
     return User.create(users).then((data) => data.dataValues.userId);
 }
