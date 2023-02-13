@@ -13,22 +13,24 @@
 2️⃣ 과제 요구 사항: `**mongoose**`를 `**sequelize**`로 변경하기!
 
 **MongoDB**로 연결되어있던 프로젝트를 **MySQL**로 변경합니다!
-
-
-
-#===<< 로직 정리 >>===
 =====================================================================================
 
---------------- 기본 폴더 윈도우에 생성 후 VScode 연결
+#===<< 전체 로직 정리 >>===
+
+=====================================================================================
+
+# 기본 세팅 로직 정리
+
+[[1]]. --------------- 기본 폴더 윈도우에 생성 후 VScode 연결
 작업폴더 만들기
 VScode로 폴더 열기
 
---------------- git init & 깃허브 레포에 푸쉬
+[[2]]. --------------- git init & 깃허브 레포에 푸쉬
 git init
 GigHub commit
 GigHub push
 
---------------- 기본 폴더 및 파일 생성
+[[3]]. --------------- 기본 폴더 및 파일 생성
 app.js 파일 만들기 
 .env 파일 생성
 routes 폴더 만들기 / auth.js 파일 생성
@@ -36,7 +38,7 @@ model 폴더 생성 / auth.js 파일 생성
 controller 폴더 생성 / auth.js 파일 생성
 middleware 폴더 생성 / auth.js 파일 생성
 
---------------- json 파일에 npm 다운로드
+[[4]]. --------------- json 파일에 npm 다운로드
 npm init -y 
 npm i
 npm i express 익스프레스 npm 인스톨
@@ -53,70 +55,139 @@ npm i mysql2 -- mysql2(신식) !== mysql
 
 ============================================================================================
 
-1. 회원 가입 API
+# 파일 코드 구현 로직 정리
+
+[[5]]. 
+
+"./app.js" 파일-----------------------------------------------------------------------------
+
+import express from 'express';
+import { sequelize } from './db/database.js';
+import cookieParser from 'cookie-parser';
+
+// env 
+import dotenv from 'dotenv';
+dotenv.config();
+
+const app = express();
+
+// json 불러오기
+app.use(express.json());
+
+// env
+const connection = process.env;
+
+// cookieParser
+app.use(cookieParser());
+
+
+// db연결
+sequelize.sync({ force: false }).then(() => {
+    console.log(`Server connection on mysql`);
+});
+
+// 서버 연결
+app.listen(connection.HOST_PORT, () => {
+    console.log(`Server listening on port ${connection.HOST_PORT}`);
+});
+
+-------------------------------------------------------------------------------------------
+
+"./.env" 파일-----------------------------------------------------------------------------
+
+
+#port
+HOST_PORT=포트번호입력
+#db
+DB_USER=DB_USER입력
+DB_DATABASE=DB_DATABASE입력
+DB_PASSWORD=DB_PASSWORD입력
+#token
+SECRETKEY=직접SECRETKEY입력
+
+-------------------------------------------------------------------------------------------
+
+============================================================================================
+
+[[6]]. 회원 가입 API
+
+    - middleware 연결
+    (1) => "./app.js" --(연결)--> "./routes/auth.js"
+        import authRoute from './routes/auth.js' 삽입
+        app.use('/', authRoute) 해서 기본 url('/') --(연결)--> authRoute
+
+    - signup url 만들기
+    (2) => "./routes/auth.js(회원가입 url 할당)"(1) --> "../controller/auth.js"(2)
+            url 할당해주기--> validateCredential 넣어주기 --> authController.signup
 
     - 닉네임, 비밀번호, 비밀번호 확인을 **request**에서 전달받기 
-    (1) => "./controller/auth.js(회원가입 signup)"
+    (3) => "./controller/auth.js(회원가입 signup)"
             const { nickname, password, confirm } = req.body로 가져오기
     
     - 닉네임은 `최소 3자 이상, 
-    (2) => "./routes/auth.js(validateCredential(nickname))"(1) --> "../middleware/varidator.js"(2)
+    (4) => "./routes/auth.js(validateCredential(nickname))"(1) --> "../middleware/varidator.js"(2)
     
     알파벳 대소문자(a~z, A~Z), 숫자(0~9)`로 구성하기 
-    (3) => "./controller/auth.js(조건식)"
+    (5) => "./controller/auth.js(조건식)"
 
     - 비밀번호는 `최소 4자 이상이며, 
-    (4) => "./routes/auth.js(validateCredential(password))"(1) --> "../middleware/varidator.js"(2)
+    (6) => "./routes/auth.js(validateCredential(password))"(1) --> "../middleware/varidator.js"(2)
+            회원가입 url 할당에 validateCredential 거치게 해 주기
 
     닉네임과 같은 값이 포함된 경우 회원가입에 실패`로 만들기 
-    (5) => "./controller/auth.js(패스워드에 닉네임과 같은값 포함하는지 확인 검증)"
+    (7) => "./controller/auth.js(패스워드에 닉네임과 같은값 포함하는지 확인 검증)"
 
     - 비밀번호 확인은 비밀번호와 정확하게 일치하기
-    (6) => "./controller/auth.js(패스워드 2중 확인 검증)"
+    (8) => "./controller/auth.js(패스워드 2중 확인 검증)"
 
     - 데이터베이스에 존재하는 닉네임을 입력한 채 회원가입 버튼을 누른 경우 "중복된 닉네임입니다." 라는 에러메세지를 **response**에 포함하기
-    (7) => "./controller/auth.js(닉네임 중복 확인)"
+    (9) => "./controller/auth.js(닉네임 중복 확인)"
 
     - 위의 조건들에 부합한다면 DB에 userId ,nickname ,password 생성하기
-    (8) => "./controller/auth.js(생성)"(1) --> "../data/auth.js"(2) (function createUser(users) 실행)
+    (10) => "./controller/auth.js(생성)"(1) --> "../data/auth.js"(2) (function createUser(users) 실행)
                 return User.create(users).then((data) => data.dataValues.userId) 로 저장
     
     - 성공 메세지 response
-    (9) => "./controller/auth.js(성공 메세지 res)"
+    (11) => "./controller/auth.js(성공 메세지 res)"
 
 ============================================================================================
 
-2. 로그인 API
+[[7]]. 로그인 API
+
+    - 로그인 Url 만들기
+    (12) => "./app.js(로그인 url 할당)"
 
     - 닉네임, 비밀번호를 **request**에서 전달받기
-    (10) => "./controller/auth.js(로그인 API)" 
+    (13) => "./controller/auth.js(로그인 API)" 
             const { nickname, password } = req.body로 가져오기
 
     - 로그인 버튼을 누른 경우 닉네임과 비밀번호가 데이터베이스에 등록됐는지 찾은 뒤, 
-    (11) => "./controller/auth.js(로그인 API)"
+    (14) => "./controller/auth.js(로그인 API)"
     
     하나라도 맞지 않는 정보가 있다면 "닉네임 또는 패스워드를 확인해주세요."라는 에러 메세지를 **response**에 포함하기
-    (12) => "./controller/auth.js(로그인 API)"
+    (15) => "./controller/auth.js(로그인 API)"
     
     - 로그인 성공 시, 로그인에 성공한 유저의 정보를 JWT를 활용하여 클라이언트에게 Cookie로 전달하기
-    (13) => "./controller/auth.js(토큰생성기)" --> "./controller/auth.js(토큰처리)"
+    (16) => "./controller/auth.js(토큰생성기)" --> "./controller/auth.js(토큰처리)"
 
 ============================================================================================
 
-3. 전체 게시글 목록 조회 API
-    - 제목, 작성자명(nickname), 작성 날짜를 조회하기
-    - 작성 날짜 기준으로 내림차순 정렬하기
+[[8]]. 게시글 API
 
-4. 게시글 작성 API
-    - 토큰을 검사하여, 유효한 토큰일 경우에만 게시글 작성 가능
-    - 제목, 작성 내용을 입력하기
+    1. 전체 게시글 목록 조회 API
+        - 제목, 작성자명(nickname), 작성 날짜를 조회하기
+        - 작성 날짜 기준으로 내림차순 정렬하기
 
-5. 게시글 조회 API
-    - 제목, 작성자명(nickname), 작성 날짜, 작성 내용을 조회하기 
-    (검색 기능이 아닙니다. 간단한 게시글 조회만 구현해주세요.)
+    2. 게시글 작성 API
+        - 토큰을 검사하여, 유효한 토큰일 경우에만 게시글 작성 가능
+        - 제목, 작성 내용을 입력하기
 
-6. 게시글 수정 API
-    - 토큰을 검사하여, 해당 사용자가 작성한 게시글만 수정 가능
+    3. 게시글 조회 API
+        - 제목, 작성자명(nickname), 작성 날짜, 작성 내용을 조회하기 
+        (검색 기능이 아닙니다. 간단한 게시글 조회만 구현해주세요.)
 
-7. 게시글 삭제 API
-    - 토큰을 검사하여, 해당 사용자가 작성한 게시글만 삭제 가능
+    4. 게시글 수정 API
+        - 토큰을 검사하여, 해당 사용자가 작성한 게시글만 수정 가능
+
+    5. 게시글 삭제 API
+        - 토큰을 검사하여, 해당 사용자가 작성한 게시글만 삭제 가능

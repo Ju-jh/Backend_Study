@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import * as userRepository from '../data/auth.js';
 
-//회원가입 signup
+//회원가입 API
 export async function signup(req, res) {
     // (1) reqest에서 전달받기
     const { nickname, password, confirm } = req.body;
@@ -47,16 +47,26 @@ export async function signup(req, res) {
     res.json({ message: '회원가입에 성공하셨습니다.' });
 }
 
-//로그인
+//로그인 API
 export async function login(req, res) {
+    // (10) nicknam, password 가져오기
+    console.log(req.body);
     const { nickname, password } = req.body;
+
+    // (11) 로그인 버튼을 누른 경우 닉네임이 데이터베이스에 등록됐는지 찾기
     const user = await userRepository.findByUsername(nickname);
+
+    // (12) 하나라도 맞지 않는 정보가 있다면 "닉네임 또는 패스워드를 확인해주세요."라는 에러 메세지를 **response**에 포함하기
     if (!user) {
         return res
             .status(412)
             .json({ errorMessage: '닉네임 또는 패스워드를 확인해주세요.' });
     }
+
+    // (11) 로그인 버튼을 누른 경우 비밀번호가 데이터베이스에 등록됐는지 찾기
     const isValidPassword = await user.password.includes(password);
+
+    // (12) 하나라도 맞지 않는 정보가 있다면 "닉네임 또는 패스워드를 확인해주세요."라는 에러 메세지를 **response**에 포함하기
     if (!isValidPassword) {
         return res
             .status(412)
@@ -70,8 +80,7 @@ export async function login(req, res) {
         .slice(10, 20)
         .replace(/^[a-z0-9_]{4,20}$/gi, '**********');
     const token = slicetoken1 + slicetoken2;
-    console.log(Authorization);
-    console.log(crtoken);
+    console.log('Authorization');
     res.cookie('Authorization', `Bearer ${crtoken}`);
     res.json({ token: token });
 }
