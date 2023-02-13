@@ -1,3 +1,4 @@
+// sequelize 연결하는 스키마
 import dotenv from 'dotenv';
 import SQ from 'sequelize';
 dotenv.config();
