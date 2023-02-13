@@ -19,10 +19,10 @@ const validateCredential = [
     validate,
 ];
 
-// 회원가입
+// 회원가입 url 할당
 router.post('/signup', validateCredential, authController.signup);
 
-// // 로그인
+// 로그인 url 할당
 router.post('/login', authController.login);
 
 // export
