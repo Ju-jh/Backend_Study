@@ -8,12 +8,12 @@ const validateCredential = [
     body('nickname')
         .trim()
         .notEmpty()
-        // (2-1) 닉네임은 최소 3자이상
+        // 닉네임은 최소 3자이상
         .isLength({ min: 3 })
         .withMessage('nickname should be at least 3 characters'),
     body('password')
         .trim()
-        // (4-1) 비밀번호는 최소 4자이상
+        // 비밀번호는 최소 4자이상
         .isLength({ min: 4 })
         .withMessage('password should be at least 4 characters'),
     validate,

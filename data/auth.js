@@ -1,6 +1,6 @@
 import SQ from 'sequelize';
 import { sequelize } from '../db/database.js';
-const DataType = SQ.DataTypes; // ?
+const DataType = SQ.DataTypes;
 
 export const User = sequelize.define(
     // users 라는걸 정의 한다면, 객체에 있는 정보와 같다.
@@ -25,11 +25,11 @@ export const User = sequelize.define(
         },
     },
     {
-        timestamps: false, // ?
+        timestamps: false,
     }
 );
 
-// (8-2) signup 생성하기
+// signup 생성하기
 export async function createUser(users) {
     return User.create(users).then((data) => data.dataValues.userId);
 }

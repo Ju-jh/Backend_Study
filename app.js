@@ -2,6 +2,7 @@ import express from 'express';
 import { sequelize } from './db/database.js';
 
 import authRoute from './routes/auth.js';
+import postRoute from './routes/post.js';
 
 import cookieParser from 'cookie-parser';
 
@@ -19,8 +20,9 @@ const connection = process.env;
 // cookieParser
 app.use(cookieParser());
 
-// // middleware 연결
-app.use('/', authRoute);
+// middleware 연결
+app.use('/', authRoute); // 로그인 url 할당
+app.use('/post', postRoute); // 게시글 url 할당
 
 // db연결
 sequelize.sync({ force: false }).then(() => {
