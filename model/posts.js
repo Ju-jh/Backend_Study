@@ -1,8 +1,10 @@
 import SQ from 'sequelize';
-import { sequelize } from '../db/database.js';
+import { sequelize } from './database.js';
 import { User } from './auth.js';
 const DataTypes = SQ.DataTypes;
 const Sequelize = SQ.Sequelize;
+
+//============================================================================================//
 
 //post기본
 const Posts = sequelize.define(
@@ -60,10 +62,14 @@ const DETAIL_USER = {
     },
 };
 
+//============================================================================================//
+
 //정리
 const ORDER_DESC = {
     order: [['createdAt', 'DESC']],
 };
+
+//============================================================================================//
 
 //게시글 생성
 export async function create(content, title, userId) {

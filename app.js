@@ -1,5 +1,5 @@
 import express from 'express';
-import { sequelize } from './db/database.js';
+import { sequelize } from './model/database.js';
 
 import authRoute from './routes/auth.js';
 import postRoute from './routes/post.js';
