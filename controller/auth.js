@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
-import * as userRepository from '../data/auth.js';
+import * as userRepository from '../model/auth.js';
 
 //회원가입 API
 export async function signup(req, res) {

@@ -1,4 +1,4 @@
-import * as postRepository from '../data/posts.js';
+import * as postRepository from '../model/posts.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();

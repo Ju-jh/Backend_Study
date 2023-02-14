@@ -3,7 +3,7 @@
 // jwt 토큰 생성기
 import jwt from 'jsonwebtoken';
 // 유저 가져오기?
-import { User } from '../data/auth.js';
+import { User } from '../model/auth.js';
 // dotenv 가져오기
 import dotenv from 'dotenv';
 dotenv.config();
@@ -35,7 +35,7 @@ export const isAuth = async (req, res, next) => {
 
         // 토큰의 아이디가 실제 DB에 있는지 확인
         const decodedToken = jwt.decode(authToken);
-        const test = await User.findByPk(decodedToken);
+        const test = await User.findByPk(decodedToken.userId);
         console.log(decodedToken);
         console.log(test);
         if (test == null) {

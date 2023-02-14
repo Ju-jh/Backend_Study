@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 // middleware 연결
 app.use('/', authRoute); // 로그인 url 할당
-app.use('/post', postRoute); // 게시글 url 할당
+app.use('/posts', postRoute); // 게시글 url 할당
 
 // db연결
 sequelize.sync({ force: false }).then(() => {
