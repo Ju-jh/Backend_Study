@@ -31,6 +31,14 @@ export async function createUser(user) {
     return new User(user).save().then((data) => data.id);
 }
 
+export async function findById(userId) {
+    return User.find({ userId });
+}
+
 export async function findNickname(nickname) {
     return User.findOne({ nickname });
+}
+
+export async function findByusername(userId) {
+    return User.find({ userId });
 }
