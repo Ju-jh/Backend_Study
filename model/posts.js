@@ -42,3 +42,22 @@ export async function create(title, content, userId, nickname) {
         }).save()
     );
 }
+
+export async function getAll() {
+    return Post.find().sort({ createdAt: -1 });
+}
+
+export async function getById(postId) {
+    return Post.find({ postId });
+}
+
+export async function update(postId, title, content) {
+    return Post.updateOne(
+        { postId: postId },
+        { $set: { title: title, content: content } }
+    );
+}
+
+export async function deleteId(postId) {
+    return Post.deleteOne({ postId: postId });
+}
