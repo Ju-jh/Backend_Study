@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import increment from 'mongoose-sequence';
+import Inc from 'mongoose-sequence';
 import { useVirtualId } from './database.js';
 import * as User from './auth.js';
 
 const { Schema } = mongoose;
-const AutoIncrement = increment(mongoose);
+const AutoIncrement = Inc(mongoose);
 
 const postSchema = new mongoose.Schema(
     {

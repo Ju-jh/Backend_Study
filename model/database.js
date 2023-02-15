@@ -17,8 +17,6 @@ const database = () => {
         .catch((e) => console.log(e));
 };
 
-export default database;
-
 export function useVirtualId(schema) {
     schema.virtual('id').get(function () {
         return this._id.toString();
@@ -26,3 +24,5 @@ export function useVirtualId(schema) {
     schema.set('toJSON', { virtuals: true });
     schema.set('toOject', { virtuals: true });
 }
+
+export default database;
