@@ -12,11 +12,6 @@ class CommentController {
         await this.commentService.getAllCommentService(res);
     };
 
-    // getAllByIdComment = async (req, res) => {
-    //     const { postId } = req.params;
-    //     await this.commentSelvice.getDetailCommentService(res, postId);
-    // };
-
     updateComment = async (req, res) => {
         const { commentId } = req.params;
         const { comment } = req.body;

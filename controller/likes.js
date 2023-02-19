@@ -7,11 +7,6 @@ class LikeController {
         await this.likeService.getAllLikeService(res);
     };
 
-    // getAllByIdLike = async (req, res) => {
-    //     const { postId } = req.params;
-    //     await this.commentSelvice.getDetailCommentService(res, postId);
-    // };
-
     updateLike = async (req, res) => {
         const { postId } = req.params;
         await this.likeService.updateLikeService(req, res, postId);

@@ -53,32 +53,3 @@ export const DETAIL_USER = {
 export const ORDER_DESC = {
     order: [['createdAt', 'DESC']],
 };
-
-// export async function getAll() {
-//     return Comments.findAll({ ...INCLUDE_USER, ...ORDER_DESC });
-// }
-// export async function findByUsername(nickname) {
-//     return User.findOne({ where: { nickname: nickname } });
-// }
-
-// export async function getById(postId) {
-//     return Posts.findOne({
-//         where: { postId },
-//         ...DETAIL_USER,
-//     });
-// }
-
-// export async function update(commentId, comment) {
-//     return Comments.findByPk(commentId, comment) //
-//         .then((comment) => {
-//             comment.comment = comment;
-//             return comment.save();
-//         });
-// }
-
-// export async function remove(postId) {
-//     return Posts.findByPk(postId) //
-//         .then((post) => {
-//             post.destroy();
-//         });
-// }
