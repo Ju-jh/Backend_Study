@@ -1,9 +1,4 @@
-import {
-    Comments,
-    INCLUDE_USER,
-    ORDER_DESC,
-    DETAIL_USER,
-} from '../models/comments.js';
+import { Comments, INCLUDE_USER, ORDER_DESC } from '../models/comments.js';
 
 class CostRepository {
     commentCreate = async (comment, userId) => {
@@ -17,12 +12,12 @@ class CostRepository {
     getById = async (commentId) => {
         return Comments.findOne({
             where: { commentId },
-            ...DETAIL_USER,
+            ...INCLUDE_USER,
         });
     };
 
     commentUpdate = async (commentId, comment) => {
-        return Comments.findByPk(commentId, DETAIL_USER).then((comments) => {
+        return Comments.findByPk(commentId, INCLUDE_USER).then((comments) => {
             comments.comment = comment;
             return comments.save();
         });

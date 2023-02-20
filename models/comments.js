@@ -26,20 +26,7 @@ export const INCLUDE_USER = {
     attributes: [
         'commentId',
         [Sequelize.col('User.userId'), 'userId'],
-        'comment',
-        'createdAt',
-        'updatedAt',
-    ],
-    include: {
-        model: User,
-        attributes: [],
-    },
-};
-
-export const DETAIL_USER = {
-    attributes: [
-        'commentId',
-        [Sequelize.col('User.userId'), 'userId'],
+        [Sequelize.col('User.nickname'), 'nickname'],
         'comment',
         'createdAt',
         'updatedAt',
@@ -51,5 +38,5 @@ export const DETAIL_USER = {
 };
 
 export const ORDER_DESC = {
-    order: [['createdAt', 'DESC']],
+    order: [['commentId', 'DESC']],
 };
