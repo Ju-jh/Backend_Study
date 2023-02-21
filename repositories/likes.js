@@ -17,16 +17,10 @@ class LikeRepository {
         return Posts.findByPk(postId);
     };
 
-    getByuserId = async (userId) => {
-        return User.findByPk(userId);
-    };
-
-    findpostinlike = async (postId) => {
-        return await Likes.findOne({ where: { postPostId: postId } });
-    };
-
-    finduserinlike = async (postId) => {
-        return await Likes.findAll({ where: { postPostId: postId } });
+    likeCheck = async (postId, userId) => {
+        return await Likes.findOne({
+            where: { postPostId: postId, userUserId: userId },
+        });
     };
 
     getAll = async () => {

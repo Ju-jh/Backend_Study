@@ -5,8 +5,14 @@ class LikeService {
     likeRepository = new LikeRepository();
 
     getAllLikeService = async (res) => {
-        const data = await this.likeRepository.getAll();
-        return res.status(200).json({ post: [data] });
+        try {
+            const data = await this.likeRepository.getAll();
+            return res.status(200).json({ post: [data] });
+        } catch (error) {
+            return res.status(400).json({
+                errorMessage: '좋아요 게시글 조회에 실패하였습니다.',
+            });
+        }
     };
 
     updateLikeService = async (req, res, postId) => {
@@ -19,32 +25,17 @@ class LikeService {
                 .status(404)
                 .json({ errorMessage: '게시글이 존재하지 않습니다.' });
         }
-        // if (postfind.dataValues.userUserId != decodedToken.userId) {
-        //     return res
-        //         .status(403)
-        //         .json({ errorMessage: '로그인이 필요한 기능입니다.' });
-        // }
-        const isLike = await this.likeRepository.findpostinlike(postId);
-        const originlike = await this.likeRepository.getByuserId(
+        const isLike = await this.likeRepository.likeCheck(
+            postId,
             decodedToken.userId
         );
-        const findUserIdInLike = await this.likeRepository.finduserinlike(
-            postId
-        );
-        console.log(findUserIdInLike);
-        // 포스트에 라이크가 없으면
-        if (!isLike) {
+        if (isLike == null) {
             await this.likeRepository.likeUpdate(postId, decodedToken.userId);
 
             return res
                 .status(200)
                 .json({ message: '게시글의 좋아요를 등록하였습니다.' });
-        } else if (
-            // 포스트에 라이크가 있으면서
-            isLike &&
-            // 기존의 좋아요 누른 아이디 == 지금 좋아요 누르는 아이디
-            originlike.dataValues.userId == isLike.dataValues.userUserId
-        ) {
+        } else if (isLike) {
             await this.likeRepository.unlikeUpdate(postId, decodedToken.userId);
             return res
                 .status(200)
