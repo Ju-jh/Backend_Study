@@ -1,4 +1,5 @@
 import { Likes } from '../models/likes.js';
+import { User } from '../models/auth.js';
 import { Posts, LIKE_USER } from '../models/posts.js';
 
 class LikeRepository {
@@ -16,8 +17,16 @@ class LikeRepository {
         return Posts.findByPk(postId);
     };
 
+    getByuserId = async (userId) => {
+        return User.findByPk(userId);
+    };
+
     findpostinlike = async (postId) => {
-        return await Likes.findOne({ postPostId: postId });
+        return await Likes.findOne({ where: { postPostId: postId } });
+    };
+
+    finduserinlike = async (postId) => {
+        return await Likes.findAll({ where: { postPostId: postId } });
     };
 
     getAll = async () => {
