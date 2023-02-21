@@ -47,11 +47,9 @@ class AuthClass {
 
         const check = jwt.verify(authToken, secretKey);
         if (!check) {
-            return res
-                .status(403)
-                .json({
-                    errorMessage: '전달된 쿠키에서 오류가 발생하였습니다.',
-                });
+            return res.status(403).json({
+                errorMessage: '전달된 쿠키에서 오류가 발생하였습니다.',
+            });
         }
 
         const decodedToken = jwt.decode(authToken);

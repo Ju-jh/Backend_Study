@@ -1,5 +1,4 @@
 import { Likes } from '../models/likes.js';
-import { User } from '../models/auth.js';
 import { Posts, LIKE_USER } from '../models/posts.js';
 
 class LikeRepository {

@@ -41,21 +41,6 @@ class LikeService {
                 .status(200)
                 .json({ message: '게시글의 좋아요를 취소하였습니다.' });
         }
-        // 기존의 좋아요 누른 아이디 != 지금 좋아요 누르는 아이디 이면서
-        // 게시글에 좋아요 누른 아이디가 있다
-        if (true) {
-            await this.likeRepository.likeUpdate(postId, decodedToken.userId);
-            return res.status(200).json({
-                message:
-                    '이미 좋아요 되어있는 게시글에 다른아이디가 게시글의 좋아요를 등록하였습니다.',
-            });
-        } else {
-            await this.likeRepository.unlikeUpdate(postId, decodedToken.userId);
-            return res.status(200).json({
-                message:
-                    '이미 좋아요 되어있는 게시글에 다른아이디가 게시글의 좋아요를 취소하였습니다.',
-            });
-        }
     };
 }
 
