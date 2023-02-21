@@ -4,35 +4,23 @@ class PostController {
     postService = new PostService();
 
     createPost = async (req, res) => {
-        const { title, content } = req.body;
-        await this.postService.createPostService(req, res, title, content);
+        await this.postService.createPostService(req, res);
     };
 
-    getAllPost = async (req, res) => {
-        await this.postService.getAllPostService(res);
+    getAllPost = async (_, res) => {
+        await this.postService.getAllPostService(_, res);
     };
 
     getAllByIdPost = async (req, res) => {
-        const { postId } = req.params;
-        await this.postService.getDetailPostService(res, postId);
+        await this.postService.getDetailPostService(req, res);
     };
 
     updatePost = async (req, res) => {
-        const { postId } = req.params;
-        const { title, content } = req.body;
-        console.log('## controller req', req);
-        await this.postService.updatePostService(
-            req,
-            res,
-            title,
-            content,
-            postId
-        );
+        await this.postService.updatePostService(req, res);
     };
 
     deletePost = async (req, res) => {
-        const { postId } = req.params;
-        await this.postService.deletePostService(req, res, postId);
+        await this.postService.deletePostService(req, res);
     };
 }
 

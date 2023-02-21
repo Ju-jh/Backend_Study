@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 class LikeService {
     likeRepository = new LikeRepository();
 
-    getAllLikeService = async (res) => {
+    getAllLikeService = async (_, res) => {
         try {
             const data = await this.likeRepository.getAll();
             return res.status(200).json({ post: [data] });
@@ -15,7 +15,8 @@ class LikeService {
         }
     };
 
-    updateLikeService = async (req, res, postId) => {
+    updateLikeService = async (req, res) => {
+        const { postId } = req.params;
         const token = req.cookies.Authorization;
         const splitedToken = token.split(' ')[1];
         const decodedToken = jwt.decode(splitedToken);

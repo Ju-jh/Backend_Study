@@ -6,7 +6,8 @@ const secretKey = process.env.SECRETKEY;
 class AuthService {
     authRepository = new AuthRepository();
 
-    createUserService = async (nickname, password, confirm, res) => {
+    createUserService = async (req, res) => {
+        const { nickname, password, confirm } = req.body;
         const rex = /^[a-zA-Z0-9]{4,20}$/;
         const nicknameCheck = rex.test(nickname);
         if (!nicknameCheck) {
@@ -34,7 +35,8 @@ class AuthService {
         return res.status(200).json({ message: '회원가입에 성공하셨습니다.' });
     };
 
-    loginUserService = async (nickname, password, res) => {
+    loginUserService = async (req, res) => {
+        const { nickname, password } = req.body;
         const user = await this.authRepository.findByUsername(nickname);
         if (!user) {
             return res

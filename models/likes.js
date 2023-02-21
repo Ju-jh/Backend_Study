@@ -2,7 +2,6 @@ import SQ from 'sequelize';
 import { sequelize } from '../db/database.js';
 import { User } from './auth.js';
 const DataTypes = SQ.DataTypes;
-const Sequelize = SQ.Sequelize;
 
 export const Likes = sequelize.define(
     'likes',
