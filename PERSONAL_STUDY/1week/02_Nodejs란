@@ -1,0 +1,51 @@
+[ Node.js 란 무엇인가? ]
+
+=> Chrome V8 JavaScript engine으로 build된 JavaScript runtime입니다.
+=> 이벤트 기반, None blocking I/O model을 사용해 가볍고 효율적.
+=> Node.js의 package 생태계인 npm은 세계에서 가장 큰 Open source library 생태계
+
+(Node.js를 굳이 사용해야 하는 이유가 뭘까?)
+
+=> None-blocking I/O, Single Thread, Event Loop의 특성이 有
+=> Node-blocking 은 함수가 실행되는 중에도 다른작업을 동시에 진행할 수 있다. --> 장점
+=> Single Thread 는 스레드 하나를 사용하는 것, 동시에 하나의 작업만을 처리할 수 있다.
+=> Event Loop 는 JavaScript가 가지고 있던 Single Thread의 약점을 극복하기 위해 효율적으로
+작업을 처리할 수 있는 특성.
+
+[ES6(ECMAScript 6)란?]
+
+=> 초기에는 Netcape라는 웹브라우저에서 사용하기 위해 만들어진 언어.
+옛날에는 정적인 홈페이지만 있었는데, 자바스크립트를 통하여 역동적인 
+애니메이션 구현이 가능하게되었다.
+=> Internet Explorer 같은 다른부라우저들도 같이 사용할 수 있게 표준화 한것이 --> ECMAScript
+=> ES6 는 ECMAScript의 6번째 버전 2015년 발표해서 ECMAScript 2015 라고도 불림.
+
+[Node.js의 REPL]
+
+(REPL이란?)
+
+=> 입력하는 코드의 결과 값을 즉시 확인 할 수 있다.
+=> Node.js 는 REPL환경을 제공하고있다.
+
+(웹 브라우저의 콘솔?)
+
+=> 웹브라우저에 있는 콘솔도 REPL
+
+(REPL 환경을 어떻게 이용해야할까?)
+
+=> widnow, linux/macOS, 가능하지만 VScode 기준으로 설명하겠다.
+--> terminal에
+
+Node // 입력 후 
+
+"Hello World" // 입력하면
+'Hello World' // 출력
+
+--------------
+
+또한
+
+> const obj = {} // obj를 객체로 선언
+undefined = 값이 할당되지 않음
+> obj // obj 입력
+{} // 빈 객체를 Return.

@@ -1,0 +1,67 @@
+[객체(object)란?]
+
+JavaScript의 데이터 타입은 크게 원시 타입과 객체 타입으로 분류된다.
+
+원시 타입 --> 단 하나의 값만 나타내고 & 변경이 불가능 한 값
+
+객체 타입 --> 다양한 타입의 값을 하나의 단위로 구성한 복합적인 자료 구조 & 객체 타입의 값을 변경 가능한 값.
+
+JavaScript는 객체(Object) 기반의 프로그래밍 언어
+    구성하는 거의 모든 것은 객체로 구성되어 있다.
+    객체(Object)는 0개 이상의 프로퍼티로 구성된 집합
+    하나의 프로퍼티는 Key와 Value로 구성되어있다.
+
+[객체 리터럴 이란?]
+
+리터럴(literal)은 사람이 이해할 수 있는 
+문자 또는 약속된 기호를 사용해 값을 생성하는 표기법
+
+객체리터럴 --> 객체를 생성하기 위한 표기법
+
+객체 리터럴은 객체를 생성하기 위해 Class를 먼저 선언
+new 연산자와 함께 생성자를 호출할 필요가 없이
+일반적인 숫자, 문자열을 만드는것과 유사하게 객체를 생성할 수 있다.
+
+
+[객체 리터럴로 객체 생성하기]
+
+객체 리터럴은 {}<-- 중괄호 내에 0개 이상의 프로퍼티를 정의해서 선언
+
+    (ex)
+    
+    let objectLiteral = {
+        key: 'Value',
+        helloWorld: function () {
+            return "Hello World";
+        }
+    };
+
+[프로퍼티(Property)란?]
+
+객체의 상태를 나타내는 값 (Data)이다.
+프로퍼티 키(Key) 와 값(Value)로 구성되어있다.
+
+    (ex)
+
+    const human = {
+        // 프로퍼티 키: 'name', 프로퍼티 값: '이용우'
+        name : '이용우'
+        // 프로퍼티 키: 'human age', 프로퍼티 값: 28
+        'human age': 28
+    }
+
+[메서드(Method)란?]
+
+프로퍼티를 참조하고 조작할 수 있는 동작(behavior)을 나타냄.
+객체의 프로퍼티 값이 함수로 구성되어 있을 경우 메서드(Method)라 부름.
+
+    (ex)
+
+    let objectLiteral = {
+        key: 'Value', // 프로퍼티
+        helloWorld: function() { // 메서드
+            return "Hellow World";
+        }
+    }
+
+    console.log(objectLiteral.hellowWorld()); // Hello World

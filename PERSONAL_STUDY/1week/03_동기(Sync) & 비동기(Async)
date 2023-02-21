@@ -1,0 +1,155 @@
+[동기 (Sync)와 비동기(Async)에 대한 개념]
+
+=> 놀이기구랑 비슷하다 --> 탑승과 하차가 동기적으로 관리된다고 볼 수 있다.
+=> 비동기로 실행된다 --> 실행된 순서와 관계없이 결과가 나오는 것.
+    (ex)맛집
+    정원이 최대 30명인 맛집
+    입장 순서는 선착순 퇴장 순서는 다 먹은사람부터...
+    다 먹은 사람이 나오면 나온 사람 수 만큼 입장 할 수 있다.
+
+[Blocking Model & Non-Blocking Model]
+
+=> Blocking Model --> 코드의 실행이 끝나기 전까지 실행 제어권을 다른곳에 넘기지 X --> 다른 작업을 하지 못하고 대기하는 것.
+=> Non-Blocking Model --> 코드의 실행이 끝나지 않아도 실행 제어권을 다른곳에 넘겨 다음코드가 실행될 수 있는 것.
+
+=> 즉, 제어권을 넘기면(Non-Blocking) --> 다른 코드도 실행될 수 있으므로 비동기 처리 가능
+=> 또한,제어권을 넘기지X(Blocking) --> 비동기 처리가 가능한 환경이어도 비동기 처리가 불가능
+
+=> (자바스크립트)는 Async + Non-Blockig Model을 채용 --> 현재 실행중인 코드의 실행이 끝나지 않아도 다음코드를 호출.
+    명령들이 순서대로 실행될 수 있게 구현되어 있지만, Non-Blockig Model에 의해 명령이 아닌 모든 함수는 비동기적으로 실행.
+    (ex)03_promise-test.js 실행해보세요.
+        1.setTimeOut(first, 1000): 1초뒤에 first()함수 --> console.log('First()'); 가 실행되도록 명령.
+        2.console.log('Middle') : 'Middle' 문자열이 출력.
+        3.console.log('Last') : 'Last' 문자열이 출력.
+        4.1초가 지난 뒤 'First' 문자열이 출력.
+
+[프로미스(Promise)]
+
+=> 자바스크립트에서 비동기처리를 --> 동기로 처리할 수 있게 돕는 객체유형. --> 비동기 처리를 아주 손쉽게 할 수 있다.
+=> Promise 생성자 인터페이스
+    executor에는 함수만 올 수 있으며 인자로 resolve, reject가 주입.
+    executor는 Promise의 실행 함수라고 불리고, Promise가 만들어질 때 자동으로 실행.
+    Promise가 연산을 언제 종료하는지 상관하지 않고, resolce, reject중 하나를 무조건 호출해야 함.
+
+    (ex)
+        new Promise(executor);
+
+        // 예제
+        new Promise((resolve, reject) => {
+            // 명령문
+        }) ;
+
+(생성자(Constructor)란 무엇인가?)
+=> JavaScript에서는 원시 타입(String, Boolean등)을 제외한 대부분의 타입들이 객체(object)로 구성되어 있다.
+    일반적으로 객채(object)를 생성하는 함수를 생성자(Constructor) 함수라고 부르게 되는데,
+    프로미스 또한 객체로 구성되어 있기 때문에 생성자 함수를 이용해 프로미스를 선언하게 된다.
+
+    async function main(){
+        function printFunc(){
+            console.log("printFunc가 실행되었습니다.") 
+            }
+
+            const obj = new Object();
+            const prom = new Promise(printFunc);
+
+
+
+
+        }
+    }
+
+    main();
+
+
+[promise의 상태]
+
+=> promise는 반드시 3가지 상태를 지니며, 대기(Pending) 상태가 아니라면,
+    promise의 연산이 이미 끝난 상태로 볼 수 있다.
+
+    대기 (Pending) : 이행하거나 거부되지 않은 초기 상태
+    이행 (Fulfilled) : 연산이 성공적으로 완료됨.
+    거부 (Rejected) : 연산이 실패함.
+
+(Fulfilled Promise)
+
+=> Promise가 만들어 질 때 executor가 실행되며, executor에서 resolve 함수가 호출되기 전까지
+firstPromise.then(...) 안에 있는 코드를 실행하지 않는다.
+이렇게 executor가 실행되어 resolve된 프로미스를 Fulfilled Promise라고도 부른다.
+JS 파일 확인
+
+(Promise.then)
+
+=> Promise 안에서 resolve가 실행 된 경우 then 매서드에 작성된 함수가 실행.
+JS 파일 확인
+
+(Promise.catch)
+
+Js 파일 확인 
+
+[비동기 함수 (Async Function)]
+
+=> 비동기 함수의 결과 값은 항상 Promise 객체로 resolve된다.
+=> 비동기 함수 안에서만 await 연산자를 사용할 수 있다.
+
+// 비동기 + 일반 함수
+    async function 함수이름() {
+        // 명령문
+    }
+
+    // 비동기 + 익명 함수
+    async function () {
+        // 명령문
+    }
+
+    // 비동기 + 화살표 함수
+    async () => {
+        // 명령문
+    }
+
+    이러한 특징은 아래처럼 작성하는 것과 굉장히 비슷
+
+    function 함수이름(){
+        return Promise.resolve('값')
+    }
+
+    // 위와 아래의 함수는 같은 동작을 보여준다.
+
+    async function 함수이름2() {
+        return '값';
+    }
+
+    함수이름();
+    // print : Promsie { '값' }
+
+    함수이름2();
+    // print : Promise { '값' }
+
+
+=> 그렇다면 비동기 함수는 왜 씀?
+    await 연산자를 비동기 함수 안에서만 사용할 수 있는데, 이를 활용하면 문법이 훨씬 간결해질 수 있다.
+    덕분에 비동기 함수는 비동기 프로그래밍을 하게 되면 즐겨 사용하는 함수 유형중 하나가 될 것.
+
+=> new Promise(executor) 코드로 Promise를 직접 생성하면 executor가 바로 실행되는 것과 달리
+    비동기 함수는 함수가 실행되기 전까지 Promise를 생성하지 넘기지X
+
+[await 연산자]
+
+=> awiat 연산자를 사용하면 Promise가 fulfill 상태가 되거나 rejected될 때까지 함수의 실행을 중단하고 
+    기다릴 수 있다.
+    Promise의 연산이 끝나면 함수에서 반환한 값을 얻을 수 있다.
+
+=> await 연산자는 async 함수 안에서만 사용할 수 있다.
+=> 인터페이스
+    
+    const result = await 값;
+
+=> "값"에는 Promise가 아닌 다른 값도 들어갈 수 있다.
+    Promise가 아니라면 기다리지 않고 해당 값 자체를 그대로 반환.
+
+    async function 함수이름() {
+        const result = await 'Test!';
+        console.log(result);
+    }
+
+    함수이름();
+    // Print: 'Test!';
